@@ -13,7 +13,7 @@ const ProductItem = ({
   name,
   price,
   currentPrice,
-}: ItemList) => {
+}: any) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { favProducts } = useSelector((state: RootState) => state.user);

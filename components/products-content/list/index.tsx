@@ -13,7 +13,7 @@ const ProductsContent = () => {
 
       {data && (
         <section className="products-list">
-          {/* {data.map((item: any) => (
+          {data.map((item: any) => (
             <ProductItem
               id={item.id}
               name={item.name}
@@ -23,7 +23,7 @@ const ProductsContent = () => {
               key={item.id}
               images={item.images}
             />
-          ))} */}
+          ))}
         </section>
       )}
     </>

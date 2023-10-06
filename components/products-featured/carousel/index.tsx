@@ -32,7 +32,7 @@ const ProductsCarousel = (props: { products: ItemList[] }) => {
         slidesPerView={slidesPerView}
         className="swiper-wrapper"
       >
-        {products.map((item, index) => (
+        {products.map((item: any, index: any) => (
           <SwiperSlide key={index}>
             <ProductItem
               id={item.ingramPartNumber}
