@@ -189,14 +189,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
                               />
                             </span>
                             <span className="badge">
-                              {" "}
                               {cartItems.length > 0 && (
                                 <span className="btn-cart__count">
                                   {cartItems.length > 0 && (
                                     <span className="btn-cart__count">
                                       {cartItems.length}
-
-                                      {console.log("new", cartItems)}
                                     </span>
                                   )}
                                 </span>
