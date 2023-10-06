@@ -60,6 +60,14 @@ export type ItemList = {
       type: string;
     }
   ];
+  id: string;
+  name: string;
+  price: string;
+  color: string;
+  images: string[];
+  discount?: string;
+  currentPrice?: number;
+  key: any;
 };
 
 export type ProductDetailType = {

@@ -3,7 +3,7 @@ import { some } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "../../store";
-import { ProductTypeList } from "../../types";
+import { ItemList } from "../../types";
 import { toggleFavProduct } from "../../store/reducers/user";
 
 const ProductItem = ({
@@ -12,8 +12,8 @@ const ProductItem = ({
   id,
   name,
   price,
-  currentPrice, 
-}: ProductTypeList) => {
+  currentPrice,
+}: ItemList) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { favProducts } = useSelector((state: RootState) => state.user);
