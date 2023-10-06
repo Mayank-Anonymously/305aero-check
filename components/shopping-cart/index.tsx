@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import CheckoutStatus from '../../components/checkout-status';
 import Item from './item';
-import { RootState } from 'store';
 import Link from 'next/link';
+import { RootState } from '../../store';
 
 const ShoppingCart = () => {
   const { cartItems } = useSelector((state: RootState)  => state.cart);
