@@ -1,7 +1,6 @@
 import useSwr from "swr";
 import ProductItem from "../../product-item";
 import ProductsLoading from "./loading";
-import { ItemList, ProductTypeList } from "../../../types";
 
 const ProductsContent = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -14,7 +13,7 @@ const ProductsContent = () => {
 
       {data && (
         <section className="products-list">
-          {data.map((item: ItemList) => (
+          {/* {data.map((item: any) => (
             <ProductItem
               id={item.id}
               name={item.name}
@@ -24,7 +23,7 @@ const ProductsContent = () => {
               key={item.id}
               images={item.images}
             />
-          ))}
+          ))} */}
         </section>
       )}
     </>
