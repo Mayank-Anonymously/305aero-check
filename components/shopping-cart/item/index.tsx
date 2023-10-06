@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { removeProduct, setCount } from "store/reducers/cart";
 import { ProductStoreType } from "../../../types";
+import { removeProduct, setCount } from "../../../store/reducers/cart";
 
 const ShoppingCart = ({
   thumb,
