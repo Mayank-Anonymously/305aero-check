@@ -32,6 +32,7 @@ const ProductsFeatured = () => {
   }
 
   if (isError) {
+    window.location.reload();
     return <div>Something Went Wrong While Fetching Data.</div>;
   }
 

@@ -30,7 +30,7 @@ const ProductItem = ({
   const navigateToDetails = (id: string) => {
     router.push(`/product/${id}`);
   };
-
+ 
   return (
     <div className="product-item">
       <div className="product__image">

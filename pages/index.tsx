@@ -8,37 +8,36 @@ import { GetServerSideProps } from "next";
 import { saveState } from "../utils/localstorage";
 import { useEffect } from "react";
 
-const callApi = async () => {
-  const options: RequestInit = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+const IndexPage = () => {
+  const callApi = async () => {
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(
+      "https://api.ingrammicro.com:443/oauth/oauth30/token?grant_type=client_credentials&client_id=SfGb7LenN6SazVajNzLKde429jDjCmRd&client_secret=f8dJJjW2M6Zuajom",
+      options
+    );
+    const token = await res.json();
+    saveState("token", token.access_token);
+    const targetTime = new Date();
+    targetTime.setHours(targetTime.getHours() + 23);
+    targetTime.setMinutes(targetTime.getMinutes() + 59);
+    const currentTime = new Date();
+    const timeDifference = targetTime.getTime() - currentTime.getTime();
+
+    // Schedule the API call with setTimeout
+    const timerId = setTimeout(callApi, timeDifference);
+
+    // Clean up the timer to prevent memory leaks
+    return () => clearTimeout(timerId);
   };
-  const res = await fetch(
-    "https://api.ingrammicro.com:443/oauth/oauth30/token?grant_type=client_credentials&client_id=SfGb7LenN6SazVajNzLKde429jDjCmRd&client_secret=f8dJJjW2M6Zuajom",
-    options
-  );
-  const token = await res.json();
-  saveState("token", token.access_token);
-  const targetTime = new Date();
-  targetTime.setHours(targetTime.getHours() + 23);
-  targetTime.setMinutes(targetTime.getMinutes() + 59);
-  const currentTime = new Date();
-  const timeDifference = targetTime.getTime() - currentTime.getTime();
 
-  // Schedule the API call with setTimeout
-  const timerId = setTimeout(callApi, timeDifference);
-
-  // Clean up the timer to prevent memory leaks
-  return () => clearTimeout(timerId);
-};
-
-const IndexPage = ({ token }) => {
   useEffect(() => {
     callApi();
   }, []);
-
   return (
     <Layout>
       <PageIntro />

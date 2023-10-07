@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Router from "next/router";
 import { wrapper } from "../store";
 // Import the CSS file
@@ -11,6 +11,7 @@ import "swiper/swiper.scss";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "../assets/css/styles.scss";
+import { saveState } from "../utils/localstorage";
 
 // import * as gtag from './../utils/gtag';
 
@@ -23,9 +24,11 @@ const isProduction = process.env.NODE_ENV === "production";
 // }
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Fragment>
-    <Component {...pageProps} />
-  </Fragment>
+  <>
+    <Fragment>
+      <Component {...pageProps} />
+    </Fragment>
+  </>
 );
 
 export default wrapper.withRedux(MyApp);

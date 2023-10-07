@@ -90,6 +90,7 @@ export type ProductDetailType = {
   technicalSpecifications: string;
   warrantyInformation: string;
   additionalInformation: object;
+  inpartno: string;
 };
 
 export type ProductTypeList = {

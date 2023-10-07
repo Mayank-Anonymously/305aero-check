@@ -3,7 +3,6 @@ import useSWR from "swr";
 interface RequestOptions {
   method: string;
   headers: HeadersInit;
-  body?: BodyInit | null;
 }
 
 const fetcher = async (url: string, options: RequestOptions) => {
@@ -16,7 +15,6 @@ const fetcher = async (url: string, options: RequestOptions) => {
 
 export function useGetWithRequestBody<T>(
   apiEndpoint: string,
-
   headers: HeadersInit
 ) {
   const { data, error } = useSWR<T>(apiEndpoint, (url) =>
