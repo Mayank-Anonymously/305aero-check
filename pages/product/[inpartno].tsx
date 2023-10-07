@@ -16,10 +16,6 @@ import { useGetWithRequestBody } from "../api/productDetail";
 
 // types
 
-type ProductPageType = {
-  product: ProductDetailType;
-};
-
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { inpartno } = query;
 
@@ -30,24 +26,25 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   };
 };
 
-const Product = ({ inpartno }: any) => {
+const token = loadState("token");
+const apiEndpoint = `${ingramserver}/resellers/v6/catalog/details/${"6YE881"}`; // Replace with your API endpoint
+const headers = {
+  accept: "application/json",
+  "IM-CustomerNumber": "70-040712",
+  "IM-CountryCode": "US",
+  "IM-SenderID": "305AeroSupplies",
+  "IM-CorrelationID": "fbac82ba-cf0a-4bcf-fc03-0c5084",
+  Authorization: `Bearer ${token}`,
+};
+
+const { data, isLoading, isError } = useGetWithRequestBody(
+  apiEndpoint,
+  headers
+);
+const product = (data as any) ? data || [] : [];
+
+const Product = ({ inpartno, product }: any) => {
   const [showBlock, setShowBlock] = useState("description");
-
-  const token = loadState("token");
-  const apiEndpoint = `${ingramserver}/resellers/v6/catalog/details/${"6YE881"}`; // Replace with your API endpoint
-  const headers = {
-    accept: "application/json",
-    "IM-CustomerNumber": "70-040712",
-    "IM-CountryCode": "US",
-    "IM-SenderID": "305AeroSupplies",
-    "IM-CorrelationID": "fbac82ba-cf0a-4bcf-fc03-0c5084",
-    Authorization: `Bearer ${token}`,
-  };
-
-  const { data, isLoading, isError } = useGetWithRequestBody(
-    apiEndpoint,
-    headers
-  );
 
   if (isLoading) {
     return <div>Please while we fetch details for you</div>;
@@ -60,7 +57,8 @@ const Product = ({ inpartno }: any) => {
       </div>
     );
   }
-  if (data)
+
+  if (data) {
     return (
       <Layout>
         <Breadcrumb />
@@ -69,7 +67,7 @@ const Product = ({ inpartno }: any) => {
           <div className="container">
             <div className="product-single__content">
               <Gallery images={"/images/placeholder/product_placeholder.png"} />
-              <Content product={data} />
+              <Content product={product} />
             </div>
 
             <div className="product-single__info">
@@ -96,7 +94,7 @@ const Product = ({ inpartno }: any) => {
 
               <Description
                 show={showBlock === "description"}
-                description={data.productDetailDescription}
+                description={product.productDetailDescription}
               />
               {/* <Reviews product={product} show={showBlock === "reviews"} /> */}
             </div>
@@ -109,6 +107,7 @@ const Product = ({ inpartno }: any) => {
         <Footer />
       </Layout>
     );
+  }
 };
 
 export default Product;

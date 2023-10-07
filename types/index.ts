@@ -91,6 +91,7 @@ export type ProductDetailType = {
   warrantyInformation: string;
   additionalInformation: object;
   inpartno: string;
+  product: {};
 };
 
 export type ProductTypeList = {
