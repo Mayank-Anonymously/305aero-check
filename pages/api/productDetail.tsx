@@ -3,9 +3,13 @@ import useSWR from "swr";
 interface RequestOptions {
   method: string;
   headers: HeadersInit;
+  body?: BodyInit | null;
 }
 
-const fetcher = async (url: string, options: RequestOptions) => {
+const fetcher = async <T,>(
+  url: string,
+  options: RequestOptions
+): Promise<T> => {
   const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`Failed to fetch data: ${response.statusText}`);
