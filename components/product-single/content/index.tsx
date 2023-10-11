@@ -18,7 +18,7 @@ type ProductContent = {
   product: ProductDetailType;
 };
 
-const Content = ({ product }: ProductContent) => {
+const Content = ({ product }: any) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const [color, setColor] = useState<string>("");

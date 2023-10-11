@@ -37,13 +37,7 @@ const ProductsCarousel = (props: { products: ItemList[] }) => {
             <ProductItem
               id={item.ingramPartNumber}
               name={item.description}
-              // price={item.price}
-              // color={item.color}
-              // discount={item.discount}
-              // currentPrice={item.currentPrice}
               key={index}
-
-              // images={item.images}
             />
           </SwiperSlide>
         ))}

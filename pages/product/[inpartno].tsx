@@ -58,6 +58,8 @@ const Product = ({ inpartno }: any) => {
 
   if (data) {
     const products = data;
+    const description = (data as any)?.productDetailDescription || [];
+
     return (
       <Layout>
         <Breadcrumb />
@@ -93,7 +95,7 @@ const Product = ({ inpartno }: any) => {
 
               <Description
                 show={showBlock === "description"}
-                description={products.productDetailDescription}
+                description={description}
               />
               {/* <Reviews product={product} show={showBlock === "reviews"} /> */}
             </div>
