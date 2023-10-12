@@ -18,7 +18,7 @@ type ProductContent = {
   product: ProductDetailType;
 };
 
-const Content = ({ product }: any) => {
+const Content = ({ product, price, priceData }: any) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const [color, setColor] = useState<string>("");
@@ -60,6 +60,7 @@ const Content = ({ product }: any) => {
 
     dispatch(addProduct(productStore));
   };
+  console.log("product:", product);
 
   return (
     <section className="product-content">
@@ -71,14 +72,35 @@ const Content = ({ product }: any) => {
         <span className="product-on-sale">Sale</span>
         <h2 className="product__name">{product.description}</h2>
 
-        {/* <div className="product__prices">
-          <h4>${product.currentPrice}</h4>
-          {product.discount && <span>${product.price}</span>}
-        </div> */}
+        <div className="product__prices">
+          <h4>${price.customerPrice}</h4>
+          {price.retailPrice && <span>${price.retailPrice}</span>}
+        </div>
       </div>
 
       <div className="product-content__filters">
-        <div className="product-filter-item">
+        <div className="checkbox-color-wrapper">
+          <div className="select-wrapper">
+            <select onChange={onSelectChange}>
+              {priceData.map((item: any, index: string) => {
+                return (
+                  <>
+                    <option>Select Location</option>
+                    {item.availability.availabilityByWarehouse.map((type) => (
+                      <>
+                        <option>
+                          {type.location} qty :{type.quantityAvailable}
+                        </option>
+                      </>
+                    ))}
+                  </>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        {/* <div className="product-filter-item">
           <h5>Color:</h5>
           <div className="checkbox-color-wrapper">
             {productsColors.map((type) => (
@@ -105,9 +127,9 @@ const Content = ({ product }: any) => {
                   <option value={type.label}>{type.label}</option>
                 ))}
               </select>
-            </div>
-          </div>
-        </div>
+              </div>
+              </div>
+            </div> */}
         <div className="product-filter-item">
           <h5>Quantity:</h5>
           <div className="quantity-buttons">

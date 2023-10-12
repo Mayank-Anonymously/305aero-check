@@ -13,22 +13,54 @@ import { ingramserver, server } from "../../utils/server";
 import { ProductDetailType } from "../../types";
 import { loadState } from "../../utils/localstorage";
 import { useGetWithRequestBody } from "../api/productDetail";
+import YourComponent from "../api/price";
 
 // types
+const token = loadState("token");
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { inpartno } = query;
+  var myHeaders = new Headers();
+  myHeaders.append("accept", "application/json");
+  myHeaders.append("IM-CustomerNumber", "70-040712");
+  myHeaders.append("IM-CountryCode", "US");
+  myHeaders.append("IM-CorrelationID", "fbac82ba-cf0a-4bcf-fc03-0c5084");
+  myHeaders.append("IM-SenderID", "305AeroSupplies");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${"cV2Rik1SZDkVs1AvrsMYN8UmEYIP"}`);
 
+  var raw = JSON.stringify({
+    products: [
+      {
+        ingramPartNumber: "06VF66",
+      },
+    ],
+  });
+
+  var requestOptions: RequestInit = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const apifetch = await fetch(
+    "https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability?includeAvailability=true&includePricing=true&includeProductAttributes=false",
+    requestOptions
+  );
+  const response = await apifetch.json();
   return {
     props: {
-      inpartno,
+      id: inpartno,
+      response: response,
     },
   };
 };
+console.log(token);
 
-const Product = ({ inpartno }: any) => {
+const Product = (props: any) => {
+  const { id, response } = props;
   const [showBlock, setShowBlock] = useState("description");
-  const token = loadState("token");
   const apiEndpoint = `${ingramserver}/resellers/v6/catalog/details/${"6YE881"}`; // Replace with your API endpoint
   const headers = {
     accept: "application/json",
@@ -55,20 +87,19 @@ const Product = ({ inpartno }: any) => {
       </div>
     );
   }
-
   if (data) {
     const products = data;
     const description = (data as any)?.productDetailDescription || [];
+    const price = (response as any)[0]?.pricing || [];
 
     return (
       <Layout>
         <Breadcrumb />
-
         <section className="product-single">
           <div className="container">
             <div className="product-single__content">
               <Gallery images={"/images/placeholder/product_placeholder.png"} />
-              <Content product={products} />
+              <Content product={products} price={price} priceData={response} />
             </div>
 
             <div className="product-single__info">
