@@ -60,7 +60,6 @@ const Content = ({ product, price, priceData }: any) => {
 
     dispatch(addProduct(productStore));
   };
-  console.log("product:", product);
 
   return (
     <section className="product-content">
@@ -81,22 +80,24 @@ const Content = ({ product, price, priceData }: any) => {
       <div className="product-content__filters">
         <div className="checkbox-color-wrapper">
           <div className="select-wrapper">
-            <select onChange={onSelectChange}>
-              {priceData.map((item: any, index: string) => {
-                return (
-                  <>
-                    <option>Select Location</option>
-                    {item.availability.availabilityByWarehouse.map((type) => (
-                      <>
-                        <option>
-                          {type.location} qty :{type.quantityAvailable}
-                        </option>
-                      </>
-                    ))}
-                  </>
-                );
-              })}
-            </select>
+            {priceData == undefined ? null : (
+              <select onChange={onSelectChange}>
+                {priceData.map((item: any, index: string) => {
+                  return (
+                    <>
+                      <option>Select Location</option>
+                      {item.availability.availabilityByWarehouse.map((type) => (
+                        <>
+                          <option>
+                            {type.location} qty :{type.quantityAvailable}
+                          </option>
+                        </>
+                      ))}
+                    </>
+                  );
+                })}
+              </select>
+            )}
           </div>
         </div>
 

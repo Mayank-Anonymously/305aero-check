@@ -32,8 +32,11 @@ const ProductsFeatured = () => {
   }
 
   if (isError) {
-    window.location.reload();
-    return <div>Something Went Wrong While Fetching Data.</div>;
+    return (
+      <div>
+        Something Went Wrong While Fetching Data. Please refresh your page.
+      </div>
+    );
   }
 
   return (

@@ -38,6 +38,7 @@ const IndexPage = () => {
   useEffect(() => {
     callApi();
   }, []);
+
   return (
     <Layout>
       <PageIntro />

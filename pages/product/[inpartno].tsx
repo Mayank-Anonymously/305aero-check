@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import Layout from "../../layouts/Main";
 import Breadcrumb from "../../components/breadcrumb";
@@ -20,47 +20,17 @@ const token = loadState("token");
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { inpartno } = query;
-  var myHeaders = new Headers();
-  myHeaders.append("accept", "application/json");
-  myHeaders.append("IM-CustomerNumber", "70-040712");
-  myHeaders.append("IM-CountryCode", "US");
-  myHeaders.append("IM-CorrelationID", "fbac82ba-cf0a-4bcf-fc03-0c5084");
-  myHeaders.append("IM-SenderID", "305AeroSupplies");
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", `Bearer ${"cV2Rik1SZDkVs1AvrsMYN8UmEYIP"}`);
 
-  var raw = JSON.stringify({
-    products: [
-      {
-        ingramPartNumber: "06VF66",
-      },
-    ],
-  });
-
-  var requestOptions: RequestInit = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  const apifetch = await fetch(
-    "https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability?includeAvailability=true&includePricing=true&includeProductAttributes=false",
-    requestOptions
-  );
-  const response = await apifetch.json();
   return {
     props: {
       id: inpartno,
-      response: response,
     },
   };
 };
-console.log(token);
-
 const Product = (props: any) => {
-  const { id, response } = props;
+  const { id } = props;
   const [showBlock, setShowBlock] = useState("description");
+  const [response, setResponse] = useState();
   const apiEndpoint = `${ingramserver}/resellers/v6/catalog/details/${"6YE881"}`; // Replace with your API endpoint
   const headers = {
     accept: "application/json",
@@ -80,7 +50,6 @@ const Product = (props: any) => {
     return <div>Please while we fetch details for you</div>;
   }
   if (isError) {
-    window.location.reload();
     return (
       <div className="text-center">
         something went wrong or data fetching is in process.
@@ -90,8 +59,40 @@ const Product = (props: any) => {
   if (data) {
     const products = data;
     const description = (data as any)?.productDetailDescription || [];
-    const price = (response as any)[0]?.pricing || [];
+    useEffect(() => {
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("IM-CustomerNumber", "70-040712");
+      myHeaders.append("IM-CountryCode", "US");
+      myHeaders.append("IM-CorrelationID", "fbac82ba-cf0a-4bcf-fc03-0c5084");
+      myHeaders.append("IM-SenderID", "305AeroSupplies");
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${token}`);
 
+      const raw = JSON.stringify({
+        products: [
+          {
+            ingramPartNumber: "06VF66",
+          },
+        ],
+      });
+
+      const requestOptions: RequestInit = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(
+        "https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability?includeAvailability=true&includePricing=true&includeProductAttributes=false",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((response) => setResponse(response))
+        .then((error) => console.log(error));
+    }, []);
+    const price = response ? (response as any)[0]?.pricing || [] : [];
     return (
       <Layout>
         <Breadcrumb />
