@@ -45,6 +45,39 @@ const Product = (props: any) => {
     apiEndpoint,
     headers
   );
+  useEffect(() => {
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("IM-CustomerNumber", "70-040712");
+    myHeaders.append("IM-CountryCode", "US");
+    myHeaders.append("IM-CorrelationID", "fbac82ba-cf0a-4bcf-fc03-0c5084");
+    myHeaders.append("IM-SenderID", "305AeroSupplies");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const raw = JSON.stringify({
+      products: [
+        {
+          ingramPartNumber: "06VF66",
+        },
+      ],
+    });
+
+    const requestOptions: RequestInit = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability?includeAvailability=true&includePricing=true&includeProductAttributes=false",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((response) => setResponse(response))
+      .then((error) => console.log(error));
+  }, []);
 
   if (isLoading) {
     return <div>Please while we fetch details for you</div>;
@@ -59,39 +92,7 @@ const Product = (props: any) => {
   if (data) {
     const products = data;
     const description = (data as any)?.productDetailDescription || [];
-    useEffect(() => {
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("IM-CustomerNumber", "70-040712");
-      myHeaders.append("IM-CountryCode", "US");
-      myHeaders.append("IM-CorrelationID", "fbac82ba-cf0a-4bcf-fc03-0c5084");
-      myHeaders.append("IM-SenderID", "305AeroSupplies");
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${token}`);
 
-      const raw = JSON.stringify({
-        products: [
-          {
-            ingramPartNumber: "06VF66",
-          },
-        ],
-      });
-
-      const requestOptions: RequestInit = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(
-        "https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability?includeAvailability=true&includePricing=true&includeProductAttributes=false",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((response) => setResponse(response))
-        .then((error) => console.log(error));
-    }, []);
     const price = response ? (response as any)[0]?.pricing || [] : [];
     return (
       <Layout>

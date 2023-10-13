@@ -38,7 +38,6 @@ const IndexPage = () => {
   useEffect(() => {
     callApi();
   }, []);
-
   return (
     <Layout>
       <PageIntro />
@@ -224,7 +223,7 @@ const IndexPage = () => {
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
               <div className="popular_listing_sliders row ui_kit_tab style2">
                 <div className="tab-content col-lg-12" id="nav-tabContent">
@@ -2436,11 +2435,11 @@ const IndexPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       <ProductsFeatured />
-      <Subscribe />
+      {/* <Subscribe /> */}
       <Footer />
     </Layout>
   );

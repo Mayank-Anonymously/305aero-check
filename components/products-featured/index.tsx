@@ -33,9 +33,17 @@ const ProductsFeatured = () => {
 
   if (isError) {
     return (
-      <div>
-        Something Went Wrong While Fetching Data. Please refresh your page.
-      </div>
+      <>
+        <div className="text-center">
+          Something Went Wrong While Fetching Data. Please refresh your page.
+        </div>
+        <span
+          className="btn btn-warning text-white"
+          onClick={() => window.location.reload()}
+        >
+          Reload
+        </span>
+      </>
     );
   }
 
