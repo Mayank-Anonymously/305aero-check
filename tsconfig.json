@@ -21,7 +21,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/product-single/specification"  ],
   "exclude": [
     "node_modules"
   ]

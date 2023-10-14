@@ -14,6 +14,8 @@ import { ProductDetailType } from "../../types";
 import { loadState } from "../../utils/localstorage";
 import { useGetWithRequestBody } from "../api/productDetail";
 import YourComponent from "../api/price";
+import Specification from "../../components/product-single/specification/specification";
+import AdditionalInfo from "../../components/product-single/Additional_Info/additional_Info";
 
 // types
 const token = loadState("token");
@@ -92,8 +94,12 @@ const Product = (props: any) => {
   if (data) {
     const products = data;
     const description = (data as any)?.productDetailDescription || [];
+    const specification = (data as any)?.indicators || [];
+    const information = (data as any)?.additionalInformation || [];
 
     const price = response ? (response as any)[0]?.pricing || [] : [];
+    console.log("data:", data);
+
     return (
       <Layout>
         <Breadcrumb />
@@ -117,6 +123,24 @@ const Product = (props: any) => {
                 </button>
                 <button
                   type="button"
+                  onClick={() => setShowBlock("specification")}
+                  className={`btn btn--rounded ${
+                    showBlock === "specification" ? "btn--active" : ""
+                  }`}
+                >
+                  Specification
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowBlock("information")}
+                  className={`btn btn--rounded ${
+                    showBlock === "information" ? "btn--active" : ""
+                  }`}
+                >
+                  Information
+                </button>
+                <button
+                  type="button"
                   onClick={() => setShowBlock("reviews")}
                   className={`btn btn--rounded ${
                     showBlock === "reviews" ? "btn--active" : ""
@@ -130,6 +154,14 @@ const Product = (props: any) => {
                 show={showBlock === "description"}
                 description={description}
               />
+              <Specification
+                show={showBlock === "specification"}
+                specification={specification}
+              />
+              {/* <AdditionalInfo
+                show={showBlock === "information"}
+                information={information}
+              /> */}
               {/* <Reviews product={product} show={showBlock === "reviews"} /> */}
             </div>
           </div>
