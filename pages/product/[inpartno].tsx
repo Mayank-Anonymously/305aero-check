@@ -139,7 +139,7 @@ const Product = (props: any) => {
                 >
                   Information
                 </button>
-                <button
+                {/* <button
                   type="button"
                   onClick={() => setShowBlock("reviews")}
                   className={`btn btn--rounded ${
@@ -147,7 +147,7 @@ const Product = (props: any) => {
                   }`}
                 >
                   Reviews (2)
-                </button>
+                </button> */}
               </div>
 
               <Description
@@ -158,10 +158,10 @@ const Product = (props: any) => {
                 show={showBlock === "specification"}
                 specification={specification}
               />
-              {/* <AdditionalInfo
+              <AdditionalInfo
                 show={showBlock === "information"}
                 information={information}
-              /> */}
+              />
               {/* <Reviews product={product} show={showBlock === "reviews"} /> */}
             </div>
           </div>

@@ -10,17 +10,25 @@ const AdditionalInfo = ({ show, information }: ProductInfoType) => {
 
   const infoObj = {
     ...information,
+    productWeight: "",
   };
-  console.log(infoObj);
   return (
     <section style={style} className="product-single__description">
-      {Object.keys(information).map((key: any) => (
+      {Object.keys(infoObj).map((key: any) => (
         <div key={key} className="product-description-block">
-          {Object.keys(key.productWeight).map(key)}
           <p>
-            <strong> {key === "productWeight" ? null : key} </strong>:{" "}
-            {information[key] === "productWeight" ? null : information[key]}
+            <strong>{key}</strong> :{infoObj[key]}
           </p>
+          {/* {information[key].productWeight.map((item: any) => {
+            {
+              Object.keys(item).map((key: any, items: any) => {
+                <p>
+                  <strong> {key === "productWeight" ? null : key} </strong>:{" "}
+                  {items}
+                </p>;
+              });
+            }
+          })} */}
         </div>
       ))}
     </section>

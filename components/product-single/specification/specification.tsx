@@ -13,7 +13,12 @@ const Specification = ({ show, specification }: ProductSpecificationType) => {
       {Object.keys(specification).map((key) => (
         <div key={key} className="product-description-block">
           <p>
-            <strong> {key} </strong>: {specification[key]}
+            <strong> {key} </strong>:{" "}
+            {specification[key] == false
+              ? "No"
+              : key == "skuType"
+              ? specification[key]
+              : "Yes"}
           </p>
         </div>
       ))}
